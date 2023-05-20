@@ -3,7 +3,7 @@ import  lodash from 'lodash';
 
 let users = [];
 
-for(let i = 0; i <=10; i++) {
+for(let i = 0; i < 10; i++) {
     users.push({
         'name': faker.person.firstName(),
         'phone': faker.phone.number('###-##-##-##'),
