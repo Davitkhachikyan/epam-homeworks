@@ -13,7 +13,7 @@ const args = {
     '--hostname': os.hostname()
 }
 
-console.log(`Welcome ${os.userInfo()['username']}`);
+process.stdout.write(`Welcome ${os.userInfo()['username']} \n`);
 
 process.stdin.on('data', (data) => {
     const input = data.toString().trim();
@@ -23,13 +23,14 @@ process.stdin.on('data', (data) => {
 });
 
 function exit(userName) {
-    console.log(`Thank you ${userName}, goodbye!`);
+    process.stdout.write(`Thank you ${userName}, goodbye!`);
     process.exit();
 }
 
 function handleInput(command, arg) {
     command == '.exit' ? exit(os.userInfo()['username'])
     : command != 'os' 
-    ? console.log('Invalid input') 
-    : console.log(args[arg] ?? 'Invalid input') ;
+    ? process.stdout.write('Invalid input \n')
+    : console.log(args[arg] ?? 'Invalid input');
 }
+
