@@ -3,8 +3,7 @@ import fs from 'fs/promises';
 
 class CsvParse {
     constructor() {
-        this.csfDir = 'csv',
-            this.result = 0;
+        this.csvDir = 'csv';
     }
 
     async readDirectory(path) {
@@ -16,28 +15,35 @@ class CsvParse {
         }
     }
 
-    async runtask() {
-        let files = await this.readDirectory('csv');
-        let size = files.length > 10 ? 10 : files.length;
+    runTask() {
+        return new Promise((resolve, reject) => {
+            let total = 0;
 
-        for (let i = 0; i < size; i++) {
-            let worker = new Worker('./worker.js');
-            worker.on('online', () => {
-                worker.postMessage(files[i]);
-            });
+            this.readDirectory(this.csvDir)
+                .then((files) => {
+                    const size = files.length > 10 ? 10 : files.length;
+                    
+                    for (let i = 0; i < size; i++) {
+                        let worker = new Worker('./worker.js');
+                        worker.on('online', () => {
+                            worker.postMessage(files[i]);
+                        });
 
-            worker.on('message', (msg) => {
-                this.result += msg   // this line doesn't work
-                worker.terminate();
-            })
-            worker.on('error', (error) =>
-                console.log('this is error: ', error)
-            )
-        }
+                        worker.on('message', (msg) => {
+                            console.log(msg)
+                            total += msg;
+                            worker.terminate();
+                        });
+                        // worker.on('error', reject(error));
+                    }
+                })
+                .then(resolve(total))
+                .catch((error) => reject(error));
+        });
     }
 }
 
-let obj = new CsvParse()
+let obj = new CsvParse();
 
-obj.runtask();
-
+let totalCount = await obj.runTask()
+console.log(totalCount);
