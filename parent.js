@@ -1,9 +1,9 @@
 import { Worker } from 'worker_threads';
 import fs from 'fs/promises';
 
-class CsvParse {
-    constructor() {
-        this.csvDir = 'csv';
+ class CsvParse {
+    constructor(csvDir) {
+        this.csvDir = csvDir;
     }
 
     async readDirectory(path) {
@@ -15,7 +15,7 @@ class CsvParse {
         }
     }
 
-    runTask() {
+     runTask() {
         return new Promise((resolve, reject) => {
             let total = 0;
 
@@ -30,11 +30,9 @@ class CsvParse {
                         });
 
                         worker.on('message', (msg) => {
-                            console.log(msg)
                             total += msg;
                             worker.terminate();
                         });
-                        // worker.on('error', reject(error));
                     }
                 })
                 .then(resolve(total))
@@ -45,5 +43,6 @@ class CsvParse {
 
 let obj = new CsvParse();
 
-let totalCount = await obj.runTask()
-console.log(totalCount);
+// let totalCount = await obj.runTask()
+
+export default CsvParse;
