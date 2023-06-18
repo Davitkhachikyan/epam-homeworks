@@ -12,6 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^8.0.1",
-    "lodash": "^4.17.21"
+    "cli-table": "^0.3.11",
+    "csv-parser": "^3.0.0",
+    "deepest-common-folder": "^1.0.0",
+    "get-all-files": "^4.1.0",
+    "glob": "^10.2.6",
+    "lodash": "^4.17.21",
+    "node-recursive-directory": "^1.2.0"
   }
 }
