@@ -1,0 +1,12 @@
+{
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "moduleResolution": "Node",
+        "strict": true,
+        "module": "es2020",
+        "target": "ES6",
+        "outDir": "dist",
+        "rootDir": ".",
+        "allowSyntheticDefaultImports": true
+    }
+}
